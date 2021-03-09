@@ -1,0 +1,28 @@
+{
+  "name": "kanpm-backend",
+  "version": "1.0.0",
+  "description": "server side for kanpm",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/locotor/kanpm-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/locotor/kanpm-backend/issues"
+  },
+  "homepage": "https://github.com/locotor/kanpm-backend#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

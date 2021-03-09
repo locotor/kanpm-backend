@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.locotor.kanpm.mappers.ProjectMapper">
+    <sql id="team_select_column">
+        team.id,team_name,create_time,creator_id,owner_id,description
+    </sql>
+    <select id="getTeamListByUserId" parameterType="string">
+        select
+        <include refid="team_select_column"></include>
+        from team inner join team_members as tm
+        on team.id = tm.team_id
+        where tm.member_id = #{userId}
+    </select>
+    <insert id="insertTeamMembers">
+        INSERT INTO
+        team_members(id,team_id,member_id)
+        VALUES
+        <foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+            uuid(),#{teamId},#{item}
+        </foreach>
+    </insert>
+</mapper>

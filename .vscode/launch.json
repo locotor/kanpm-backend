@@ -1,0 +1,22 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch KanpmApplication",
+            "request": "launch",
+            "mainClass": "com.locotor.kanpm.KanpmApplication",
+            "projectName": "kanpm_server_ffd66c63"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-kanpm",
+            "request": "launch",
+            "mainClass": "com.locotor.kanpm.KanpmApplication",
+            "projectName": "kanpm"
+        }
+    ]
+}
