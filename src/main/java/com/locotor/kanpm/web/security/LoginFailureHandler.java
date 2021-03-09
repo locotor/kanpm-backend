@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.locotor.kanpm.web.common.CodeMessage;
-import com.locotor.kanpm.web.common.ResponseData;
+import com.locotor.kanpm.model.enums.ResponseCode;
+import com.locotor.kanpm.model.payloads.ResponseData;
 
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,17 +33,18 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     private ResponseData setResponseData(AuthenticationException exception) {
         if (exception instanceof LockedException) {
-            return ResponseData.build(CodeMessage.USER_IS_LOCK);
+            return ResponseData.build(ResponseCode.USER_IS_LOCK);
         } else if (exception instanceof CredentialsExpiredException) {
-            return ResponseData.build(CodeMessage.CREDENTIAL_NOT_RIGHT);
+            return ResponseData.build(ResponseCode.CREDENTIAL_NOT_RIGHT);
         } else if (exception instanceof AccountExpiredException) {
-            return ResponseData.build(CodeMessage.USER_NOT_RIGHT);
+            return ResponseData.build(ResponseCode.USER_NOT_RIGHT);
         } else if (exception instanceof DisabledException) {
-            return ResponseData.build(CodeMessage.USER_DISABLE);
+            return ResponseData.build(ResponseCode.USER_DISABLE);
         } else if (exception instanceof BadCredentialsException) {
-            return ResponseData.build(CodeMessage.AUTH_ERROR);
+            ResponseData build = ResponseData.build(ResponseCode.AUTH_ERROR);
+            return build;
         }
-        return ResponseData.build(CodeMessage.USER_NOT_LOGIN);
+        return ResponseData.build(ResponseCode.USER_NOT_LOGIN);
     }
 
 }

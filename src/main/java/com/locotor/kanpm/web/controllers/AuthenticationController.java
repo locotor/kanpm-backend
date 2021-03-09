@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.locotor.kanpm.model.entities.User;
-import com.locotor.kanpm.model.payloads.ApiResponse;
+import com.locotor.kanpm.model.enums.ResponseCode;
+import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.SignUpRequest;
 import com.locotor.kanpm.services.UserService;
 
@@ -45,27 +46,37 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> signUp(@RequestBody SignUpRequest request, HttpSession session) {
+    public ResponseEntity<ResponseData> signUp(@RequestBody SignUpRequest request, HttpSession session) {
         String requestCaptcha = request.getCaptcha();
         String sessionCaptcha = (String) session.getAttribute(captchaKey);
         if (StringUtils.isEmpty(requestCaptcha)) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Captcha can not be null!"));
+            return ResponseEntity.badRequest().body(
+                    ResponseData.build(ResponseCode.CAPTCHA_IS_NULL)
+            );
         }
         if (!sessionCaptcha.equalsIgnoreCase(requestCaptcha)) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Captcha is wrong!"));
+            return ResponseEntity.badRequest().body(
+                    ResponseData.build(ResponseCode.CAPTCHA_NOT_RIGHT)
+            );
         }
         session.removeAttribute(captchaKey);
         User userTest = (User) userService.loadUserByUsername(request.getUserName());
         if (userTest != null) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Username is already taken!"));
+            return ResponseEntity.badRequest().body(
+                    ResponseData.build(ResponseCode.USER_ALREADY_EXIST)
+            );
         }
 
         User user = new User(request.getUserName(), passwordEncoder.encode(request.getPassword()));
         boolean insertResult = userService.save(user);
         if (insertResult) {
-            return ResponseEntity.ok(new ApiResponse(true, "sign up successfully"));
+            return ResponseEntity.ok(
+                    ResponseData.ok(true)
+            );
         } else {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "sign up failed"));
+            return ResponseEntity.badRequest().body(
+                    ResponseData.build(ResponseCode.USER_NOT_LOGIN, false)
+            );
         }
 
     }
@@ -73,13 +84,19 @@ public class AuthenticationController {
     @GetMapping("/verifyUserNameOrEmail")
     public ResponseEntity<Object> verifyUserNameOrEmail(String userNameOrEmail) {
         if (userNameOrEmail.isBlank()) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "parameter should not be blank"));
+            return ResponseEntity.badRequest().body(
+                    ResponseData.build(ResponseCode.USER_EMPTY)
+            );
         }
         User userTest = (User) userService.loadUserByUsername(userNameOrEmail);
         if (userTest != null) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "this username is already exist"));
+            return ResponseEntity.ok(
+                    ResponseData.build(ResponseCode.SUCCESS, false)
+            );
         }
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(
+                ResponseData.build(ResponseCode.SUCCESS, true)
+        );
     }
 
     @GetMapping("/captcha")

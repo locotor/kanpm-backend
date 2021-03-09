@@ -1,4 +1,6 @@
-package com.locotor.kanpm.web.common;
+package com.locotor.kanpm.model.payloads;
+
+import com.locotor.kanpm.model.enums.ResponseCode;
 
 public class ResponseData {
 
@@ -9,8 +11,8 @@ public class ResponseData {
     private Object data;
 
     public ResponseData() {
-        this.code = CodeMessage.SUCCESS.getCode();
-        this.message = CodeMessage.SUCCESS.getMessage();
+        this.code = ResponseCode.SUCCESS.getCode();
+        this.message = ResponseCode.SUCCESS.getMessage();
         this.data = null;
     }
 
@@ -20,7 +22,7 @@ public class ResponseData {
         this.data = null;
     }
 
-    public ResponseData(CodeMessage message, Object data) {
+    public ResponseData(ResponseCode message, Object data) {
         this.code = message.getCode();
         this.message = message.getMessage();
         this.data = data;
@@ -33,12 +35,12 @@ public class ResponseData {
     }
 
     public ResponseData(Object data) {
-        this.code = CodeMessage.SUCCESS.getCode();
-        this.message = CodeMessage.SUCCESS.getMessage();
+        this.code = ResponseCode.SUCCESS.getCode();
+        this.message = ResponseCode.SUCCESS.getMessage();
         this.data = data;
     }
 
-    public static ResponseData build(CodeMessage message, Object data) {
+    public static ResponseData build(ResponseCode message, Object data) {
         return new ResponseData(message, data);
     }
 
@@ -46,7 +48,7 @@ public class ResponseData {
         return new ResponseData(code, message, data);
     }
 
-    public static ResponseData build(CodeMessage message) {
+    public static ResponseData build(ResponseCode message) {
         return new ResponseData(message, null);
     }
 
@@ -58,30 +60,26 @@ public class ResponseData {
         return new ResponseData(data);
     }
 
-    public static ResponseData ok() {
-        return new ResponseData(null);
-    }
-
     /**
      * 将返回数据设置为系统错误状态
      */
     public void change2SysError() {
-        this.code = CodeMessage.SYS_ERROR.getCode();
-        this.message = CodeMessage.SYS_ERROR.getMessage();
+        this.code = ResponseCode.SYS_ERROR.getCode();
+        this.message = ResponseCode.SYS_ERROR.getMessage();
     }
 
     public void fail() {
-        this.code = CodeMessage.FAIL.getCode();
-        this.message = CodeMessage.FAIL.getMessage();
+        this.code = ResponseCode.FAIL.getCode();
+        this.message = ResponseCode.FAIL.getMessage();
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setCodeMessage(CodeMessage CodeMessage) {
-        this.code = CodeMessage.getCode();
-        this.message = CodeMessage.getMessage();
+    public void setResponseCode(ResponseCode ResponseCode) {
+        this.code = ResponseCode.getCode();
+        this.message = ResponseCode.getMessage();
     }
 
     public void setCode(String code) {

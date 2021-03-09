@@ -2,8 +2,9 @@ package com.locotor.kanpm.web.controllers;
 
 import com.locotor.kanpm.model.entities.Project;
 import com.locotor.kanpm.model.entities.User;
+import com.locotor.kanpm.model.enums.ResponseCode;
 import com.locotor.kanpm.model.payloads.AddProjectRequest;
-import com.locotor.kanpm.model.payloads.ApiResponse;
+import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.UpdateProjectRequest;
 import com.locotor.kanpm.services.ProjectService;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/project")
@@ -30,43 +32,42 @@ public class ProjectController extends ControllerBase {
     }
 
     @GetMapping("getProjectById")
-    public ResponseEntity<ApiResponse> getProjectById(String id) {
+    public ResponseEntity<ResponseData> getProjectById(String id) {
         Project project = projectService.getById(id);
-        var resp = new ApiResponse(true, "Add project successfully");
-        resp.setData(project);
-        return ResponseEntity.ok(resp);
+        if(project == null){
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_NOT_EXIST));
+        }
+        return ResponseEntity.ok(ResponseData.ok(project));
     }
 
     @GetMapping("getProjectListByTeamId")
-    public ResponseEntity<ApiResponse> getProjectListByTeamId(String teamId) {
-        var teamList = projectService.getProjectListByTeamId(teamId);
-        var resp = new ApiResponse(true, "get project list successfully");
-        resp.setData(teamList);
-        return ResponseEntity.ok(resp);
+    public ResponseEntity<ResponseData> getProjectListByTeamId(String teamId) {
+        List<Project> projectList = projectService.getProjectListByTeamId(teamId);
+        return ResponseEntity.ok(ResponseData.ok(projectList));
     }
 
     @GetMapping("verifyProjectName")
-    public ResponseEntity<ApiResponse> verifyProjectName(String projectName, String teamId) {
+    public ResponseEntity<ResponseData> verifyProjectName(String projectName, String teamId) {
         if (projectName.isBlank()) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "parameter should not be blank"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_EMPTY));
         }
         Project projectTest = projectService.getProjectByName(projectName, teamId);
         if (projectTest != null) {
-            return ResponseEntity.ok(new ApiResponse(false, "project name is already exist"));
+            return ResponseEntity.ok(ResponseData.ok(false));
         }
-        return ResponseEntity.ok(new ApiResponse(true));
+        return ResponseEntity.ok(ResponseData.ok(true));
     }
 
     @PostMapping("addProject")
-    public ResponseEntity<ApiResponse> postMethodName(@RequestBody AddProjectRequest request) {
+    public ResponseEntity<ResponseData> postMethodName(@RequestBody AddProjectRequest request) {
         Project projectTest = projectService.getProjectByName(request.getProjectName(), request.getTeamId());
         if (projectTest != null) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Project name is already taken!"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST));
         }
 
         User currentUser = getCurrentUser();
         if (currentUser == null) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "need to signin first!"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.USER_NOT_LOGIN));
         }
 
         String currentUserId = currentUser.getId();
@@ -79,21 +80,21 @@ public class ProjectController extends ControllerBase {
         boolean insertResult = projectService.save(project);
 
         if (insertResult) {
-            return ResponseEntity.ok(new ApiResponse(true, "Add project successfully"));
+            return ResponseEntity.ok(ResponseData.ok(true));
         }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Add project failed"));
+        return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.FAIL));
     }
 
     @PutMapping("updateProject")
-    public ResponseEntity<ApiResponse> updateProject(@RequestBody UpdateProjectRequest request) {
+    public ResponseEntity<ResponseData> updateProject(@RequestBody UpdateProjectRequest request) {
         String teamId = request.getId();
         if (teamId.isBlank()) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Project id must not be null"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ID_EMPTY));
         }
 
         Project projectNameTest = projectService.getProjectByName(request.getProjectName(), request.getTeamId());
         if (projectNameTest != null) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Project name is already taken!"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST));
         }
 
         Project project = new Project(request.getId(), request.getTeamId());
@@ -103,24 +104,24 @@ public class ProjectController extends ControllerBase {
         boolean updateResult = projectService.updateById(project);
 
         if (updateResult) {
-            return ResponseEntity.ok(new ApiResponse(true, "update project successfully"));
+            return ResponseEntity.ok(ResponseData.ok(true));
         } else {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "update project failed"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.FAIL));
         }
     }
 
     @PutMapping("archiveProject")
-    public ResponseEntity<ApiResponse> archiveProject(@RequestBody UpdateProjectRequest request) {
+    public ResponseEntity<ResponseData> archiveProject(@RequestBody UpdateProjectRequest request) {
         String id = request.getId();
         if (id.isBlank()) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Project id must not be null"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ID_EMPTY));
         }
 
         boolean updateResult = projectService.archiveProject(id);
         if (updateResult) {
-            return ResponseEntity.ok(new ApiResponse(true, "archive project successfully"));
+            return ResponseEntity.ok(ResponseData.ok(true));
         } else {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "archive project failed"));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.FAIL));
         }
     }
 

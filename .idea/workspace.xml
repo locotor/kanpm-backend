@@ -24,20 +24,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b42a1ab8-32ef-41ef-8ca8-6032e8875241" name="Default Changelist" comment="split into individual maven module">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication-root/authentication-root.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication-root/authentication-root.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication-root/authentication-root.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication-root/authentication-root.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/authentication.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/login/login.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/login/login.component.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/login/login.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/login/login.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/register/register.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../kanpm/src/app/pages/authentication/register/register.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kanpm/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../kanpm/src/styles.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/enums/ResponseCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/payloads/ApiResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/payloads/JwtAuthenticationResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/CodeMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/ResponseData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/payloads/ResponseData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/KanpmSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/KanpmSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginFailureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginFailureHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginSuccessHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,11 +46,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
@@ -84,10 +83,12 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.1199041" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\kanpm-backend\src\main\java\com\locotor\kanpm\model\enum" />
+      <recent name="D:\Projects\kanpm-backend\src\main\java\com\locotor\kanpm\web\common" />
       <recent name="D:\Projects\kanpm\kanpm_server\kanpm-mapper\src\main\resources\mapping" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -95,7 +96,44 @@
       <recent name="com.locotor.kanpm" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.KanpmApplication">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.D:/Projects/kanpm-backend">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="D:/Projects/kanpm-backend" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="TeamServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="kanpm" />
       <extension name="coverage">
@@ -143,21 +181,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserMapperTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="kanpm" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.locotor.kanpm.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.locotor.kanpm.services" />
-      <option name="MAIN_CLASS_NAME" value="com.locotor.kanpm.services.UserMapperTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UserMapperTest.testSelect" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="kanpm" />
       <extension name="coverage">
@@ -174,13 +197,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KanpmApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="kanpm" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.locotor.kanpm.KanpmApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="KanpmApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="kanpm" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.locotor.kanpm.KanpmApplication" />
@@ -191,11 +207,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.D:/Projects/kanpm-backend" />
         <item itemvalue="JUnit.TeamServiceTest.testTeamSelect" />
         <item itemvalue="JUnit.TeamServiceTest.testTeamSelectById" />
         <item itemvalue="JUnit.TeamServiceTest" />
         <item itemvalue="JUnit.UserMapperTest.testSelect" />
-        <item itemvalue="JUnit.UserMapperTest" />
       </list>
     </recent_temporary>
   </component>
@@ -227,6 +243,7 @@
       <workItem from="1614909570984" duration="13676000" />
       <workItem from="1615170244157" duration="1295000" />
       <workItem from="1615186009217" duration="3147000" />
+      <workItem from="1615270620276" duration="8403000" />
     </task>
     <task id="LOCAL-00001" summary="split into individual maven module">
       <created>1595843086839</created>
@@ -271,7 +288,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -286,6 +303,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
     <MESSAGE value="split into individual maven module" />
     <option name="LAST_COMMIT_MESSAGE" value="split into individual maven module" />
   </component>
