@@ -46,7 +46,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseData> signUp(@RequestBody SignUpRequest request, HttpSession session) {
+    public ResponseEntity<ResponseData> register(@RequestBody SignUpRequest request, HttpSession session) {
         String requestCaptcha = request.getCaptcha();
         String sessionCaptcha = (String) session.getAttribute(captchaKey);
         if (StringUtils.isEmpty(requestCaptcha)) {
@@ -55,9 +55,7 @@ public class AuthenticationController {
             );
         }
         if (!sessionCaptcha.equalsIgnoreCase(requestCaptcha)) {
-            return ResponseEntity.badRequest().body(
-                    ResponseData.build(ResponseCode.CAPTCHA_NOT_RIGHT)
-            );
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.CAPTCHA_NOT_RIGHT));
         }
         session.removeAttribute(captchaKey);
         User userTest = (User) userService.loadUserByUsername(request.getUserName());
@@ -82,7 +80,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/verifyUserNameOrEmail")
-    public ResponseEntity<Object> verifyUserNameOrEmail(String userNameOrEmail) {
+    public ResponseEntity<ResponseData> verifyUserNameOrEmail(String userNameOrEmail) {
         if (userNameOrEmail.isBlank()) {
             return ResponseEntity.badRequest().body(
                     ResponseData.build(ResponseCode.USER_EMPTY)
@@ -91,7 +89,25 @@ public class AuthenticationController {
         User userTest = (User) userService.loadUserByUsername(userNameOrEmail);
         if (userTest != null) {
             return ResponseEntity.ok(
-                    ResponseData.build(ResponseCode.SUCCESS, false)
+                    ResponseData.build(ResponseCode.FAIL, false)
+            );
+        }
+        return ResponseEntity.ok(
+                ResponseData.build(ResponseCode.SUCCESS, true)
+        );
+    }
+
+    @GetMapping("/verifyCaptcha")
+    public ResponseEntity<ResponseData> verifyCaptcha(String captcha, HttpSession session) {
+        if (captcha.isBlank()) {
+            return ResponseEntity.badRequest().body(
+                    ResponseData.build(ResponseCode.CAPTCHA_IS_NULL)
+            );
+        }
+        String sessionCaptcha = (String) session.getAttribute(captchaKey);
+        if (!sessionCaptcha.equalsIgnoreCase(captcha)) {
+            return ResponseEntity.ok(
+                    ResponseData.build(ResponseCode.FAIL, false)
             );
         }
         return ResponseEntity.ok(
