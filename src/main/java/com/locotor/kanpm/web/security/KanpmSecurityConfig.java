@@ -20,9 +20,6 @@ public class KanpmSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
-
     @Bean
     public LoginFilter loginFilter(LoginSuccessHandler loginSuccessHandler, LoginFailureHandler loginFailureHandler)
             throws Exception {
@@ -53,8 +50,7 @@ public class KanpmSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().logout().logoutUrl("/auth/logout").and().authorizeRequests().antMatchers("/auth/*")
-                .permitAll().anyRequest().authenticated().and().exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler);
+                .permitAll().anyRequest().authenticated();
 
         http.addFilterAt(loginFilter(new LoginSuccessHandler(), new LoginFailureHandler()),
                 UsernamePasswordAuthenticationFilter.class);

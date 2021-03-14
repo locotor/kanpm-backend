@@ -38,7 +38,6 @@ public class User implements UserDetails {
     private transient Set<Role> roles = new HashSet<>();
 
     public User(String username, String password) {
-        this.id = id;
         this.username = username;
         this.password = password;
     }
