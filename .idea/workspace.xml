@@ -24,18 +24,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b42a1ab8-32ef-41ef-8ca8-6032e8875241" name="Default Changelist" comment="split into individual maven module">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/enums/ResponseCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/payloads/ApiResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/payloads/JwtAuthenticationResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/CodeMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/ResponseData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/model/payloads/ResponseData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginFailureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginFailureHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/LoginSuccessHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,18 +93,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.D:/Projects/kanpm-backend">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.TeamServiceTest">
     <configuration name="D:/Projects/kanpm-backend" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -207,10 +186,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.D:/Projects/kanpm-backend" />
+        <item itemvalue="JUnit.TeamServiceTest" />
         <item itemvalue="JUnit.TeamServiceTest.testTeamSelect" />
         <item itemvalue="JUnit.TeamServiceTest.testTeamSelectById" />
-        <item itemvalue="JUnit.TeamServiceTest" />
         <item itemvalue="JUnit.UserMapperTest.testSelect" />
       </list>
     </recent_temporary>

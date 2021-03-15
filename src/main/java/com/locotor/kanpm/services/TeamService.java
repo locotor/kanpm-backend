@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.locotor.kanpm.mappers.TeamMemberMapper;
 import com.locotor.kanpm.model.entities.Team;
+import com.locotor.kanpm.model.entities.TeamMembers;
 import com.locotor.kanpm.mappers.TeamMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class TeamService extends ServiceImpl<TeamMapper, Team> {
     }
 
     public int insertTeamMembers(String teamId, String[] userIds) {
-        return teamMemberMapper.insertTeamMembers(teamId, userIds);
+        return teamMemberMapper.insert(new TeamMembers(teamId, userIds));
     }
 }

@@ -25,4 +25,5 @@ node_modules
 
 # maven
 
-target/
+target/*
+/.idea/*

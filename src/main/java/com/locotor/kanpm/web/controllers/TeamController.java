@@ -61,7 +61,7 @@ public class TeamController extends ControllerBase {
     public ResponseEntity<ResponseData> addTeam(@RequestBody AddTeamRequest request) {
         Team teamTest = teamService.getTeamByName(request.getTeamName());
         if (teamTest != null) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.TEAM_NOT_EXIST));
+            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.TEAM_ALREADY_EXIST));
         }
 
         User currentUser = getCurrentUser();
@@ -80,6 +80,8 @@ public class TeamController extends ControllerBase {
                     new String[]{currentUserId});
             if (insertTeamMemberResult > 0) {
                 return ResponseEntity.ok(ResponseData.ok(true));
+            }else{
+                //TODO rollback team table data
             }
         }
         return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.FAIL));
