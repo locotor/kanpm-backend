@@ -23,7 +23,9 @@ public class ProjectService extends ServiceImpl<ProjectMapper, Project> {
     }
 
     public List<Project> getProjectListByTeamId(String teamId) {
-        return getBaseMapper().getProjectListByTeamId(teamId);
+        QueryWrapper<Project> wrapper = new QueryWrapper<>();
+        wrapper.eq("team_id", teamId);
+        return list(wrapper);
     }
 
     public boolean archiveProject(String id) {

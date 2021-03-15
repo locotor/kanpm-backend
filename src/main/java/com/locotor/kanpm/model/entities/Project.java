@@ -26,7 +26,7 @@ public class Project {
     @TableField("team_id")
     private String teamId;
 
-    @TableField("create_id")
+    @TableField("creator_id")
     private String creatorId;
 
     @TableField("create_time")
