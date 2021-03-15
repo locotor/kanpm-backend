@@ -20,7 +20,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
-        ResponseData responseData = new ResponseData();
+        var user = authentication.getPrincipal();
+        ResponseData responseData = ResponseData.ok(user);
         response.setContentType("application/json;charset=utf-8");
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getWriter(), responseData);

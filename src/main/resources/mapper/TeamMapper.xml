@@ -4,7 +4,7 @@
     <sql id="team_select_column">
         team.id,team_name,create_time,creator_id,owner_id,description
     </sql>
-    <select id="getTeamListByUserId" parameterType="string">
+    <select id="getTeamListByUserId" parameterType="string" resultType="com.locotor.kanpm.model.entities.Team">
         select
         <include refid="team_select_column"></include>
         from team inner join team_members as tm
