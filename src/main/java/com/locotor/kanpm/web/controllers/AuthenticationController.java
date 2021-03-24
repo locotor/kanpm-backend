@@ -15,7 +15,6 @@ import com.locotor.kanpm.services.UserService;
 
 import com.locotor.kanpm.web.common.Captcha;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -46,73 +45,53 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseData> register(@RequestBody SignUpRequest request, HttpSession session) {
+    public ResponseData register(@RequestBody SignUpRequest request, HttpSession session) {
         String requestCaptcha = request.getCaptcha();
         String sessionCaptcha = (String) session.getAttribute(captchaKey);
         if (StringUtils.isEmpty(requestCaptcha)) {
-            return ResponseEntity.badRequest().body(
-                    ResponseData.build(ResponseCode.CAPTCHA_IS_NULL)
-            );
+            return ResponseData.build(ResponseCode.CAPTCHA_IS_NULL);
         }
         if (!sessionCaptcha.equalsIgnoreCase(requestCaptcha)) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.CAPTCHA_NOT_RIGHT));
+            return ResponseData.build(ResponseCode.CAPTCHA_NOT_RIGHT);
         }
         session.removeAttribute(captchaKey);
         User userTest = (User) userService.loadUserByUsername(request.getUserName());
         if (userTest != null) {
-            return ResponseEntity.badRequest().body(
-                    ResponseData.build(ResponseCode.USER_ALREADY_EXIST)
-            );
+            return ResponseData.build(ResponseCode.USER_ALREADY_EXIST);
         }
 
         User user = new User(request.getUserName(), passwordEncoder.encode(request.getPassword()));
         boolean insertResult = userService.save(user);
         if (insertResult) {
-            return ResponseEntity.ok(
-                    ResponseData.ok(true)
-            );
+            return ResponseData.ok(true);
         } else {
-            return ResponseEntity.badRequest().body(
-                    ResponseData.build(ResponseCode.USER_NOT_LOGIN, false)
-            );
+            return ResponseData.build(ResponseCode.USER_NOT_LOGIN, false);
         }
 
     }
 
-    @GetMapping("/verifyUserNameOrEmail")
-    public ResponseEntity<ResponseData> verifyUserNameOrEmail(String userNameOrEmail) {
+    @GetMapping("/verify-username")
+    public ResponseData verifyUserName(String userNameOrEmail) {
         if (userNameOrEmail.isBlank()) {
-            return ResponseEntity.badRequest().body(
-                    ResponseData.build(ResponseCode.USER_EMPTY)
-            );
+            return ResponseData.build(ResponseCode.USER_EMPTY);
         }
         User userTest = (User) userService.loadUserByUsername(userNameOrEmail);
         if (userTest != null) {
-            return ResponseEntity.ok(
-                    ResponseData.build(ResponseCode.FAIL, false)
-            );
+            return ResponseData.build(ResponseCode.SUCCESS, false);
         }
-        return ResponseEntity.ok(
-                ResponseData.build(ResponseCode.SUCCESS, true)
-        );
+        return ResponseData.build(ResponseCode.SUCCESS, true);
     }
 
-    @GetMapping("/verifyCaptcha")
-    public ResponseEntity<ResponseData> verifyCaptcha(String captcha, HttpSession session) {
+    @GetMapping("/verify-captcha")
+    public ResponseData verifyCaptcha(String captcha, HttpSession session) {
         if (captcha.isBlank()) {
-            return ResponseEntity.badRequest().body(
-                    ResponseData.build(ResponseCode.CAPTCHA_IS_NULL)
-            );
+            return ResponseData.build(ResponseCode.CAPTCHA_IS_NULL);
         }
         String sessionCaptcha = (String) session.getAttribute(captchaKey);
         if (!sessionCaptcha.equalsIgnoreCase(captcha)) {
-            return ResponseEntity.ok(
-                    ResponseData.build(ResponseCode.FAIL, false)
-            );
+            return ResponseData.build(ResponseCode.SUCCESS, false);
         }
-        return ResponseEntity.ok(
-                ResponseData.build(ResponseCode.SUCCESS, true)
-        );
+        return ResponseData.build(ResponseCode.SUCCESS, true);
     }
 
     @GetMapping("/captcha")

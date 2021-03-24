@@ -7,9 +7,9 @@ import com.locotor.kanpm.model.payloads.AddProjectRequest;
 import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.UpdateProjectRequest;
 import com.locotor.kanpm.services.ProjectService;
+import com.locotor.kanpm.web.security.CurrentUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,52 +22,52 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/project")
-public class ProjectController extends ControllerBase {
+public class ProjectController {
 
     private ProjectService projectService;
 
     @Autowired
-    public  ProjectController(ProjectService projectService){
+    public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
 
     @GetMapping("getProjectById")
-    public ResponseEntity<ResponseData> getProjectById(String id) {
+    public ResponseData getProjectById(String id) {
         Project project = projectService.getById(id);
-        if(project == null){
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_NOT_EXIST));
+        if (project == null) {
+            return ResponseData.build(ResponseCode.PROJECT_NOT_EXIST);
         }
-        return ResponseEntity.ok(ResponseData.ok(project));
+        return ResponseData.ok(project);
     }
 
     @GetMapping("getProjectListByTeamId")
-    public ResponseEntity<ResponseData> getProjectListByTeamId(String teamId) {
+    public ResponseData getProjectListByTeamId(String teamId) {
         List<Project> projectList = projectService.getProjectListByTeamId(teamId);
-        return ResponseEntity.ok(ResponseData.ok(projectList));
+        return ResponseData.ok(projectList);
     }
 
     @GetMapping("verifyProjectName")
-    public ResponseEntity<ResponseData> verifyProjectName(String projectName, String teamId) {
+    public ResponseData verifyProjectName(String projectName, String teamId) {
         if (projectName.isBlank()) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_EMPTY));
+            return ResponseData.build(ResponseCode.PROJECT_EMPTY);
         }
         Project projectTest = projectService.getProjectByName(projectName, teamId);
         if (projectTest != null) {
-            return ResponseEntity.ok(ResponseData.ok(false));
+            return ResponseData.ok(false);
         }
-        return ResponseEntity.ok(ResponseData.ok(true));
+        return ResponseData.ok(true);
     }
 
     @PostMapping("addProject")
-    public ResponseEntity<ResponseData> postMethodName(@RequestBody AddProjectRequest request) {
+    public ResponseData postMethodName(@CurrentUser User currentUser,
+            @RequestBody AddProjectRequest request) {
         Project projectTest = projectService.getProjectByName(request.getProjectName(), request.getTeamId());
         if (projectTest != null) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST));
+            return ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST);
         }
 
-        User currentUser = getCurrentUser();
         if (currentUser == null) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.USER_NOT_LOGIN));
+            return ResponseData.build(ResponseCode.USER_NOT_LOGIN);
         }
 
         String currentUserId = currentUser.getId();
@@ -80,21 +80,21 @@ public class ProjectController extends ControllerBase {
         boolean insertResult = projectService.save(project);
 
         if (insertResult) {
-            return ResponseEntity.ok(ResponseData.ok(true));
+            return ResponseData.ok(true);
         }
-        return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.FAIL));
+        return ResponseData.build(ResponseCode.FAIL);
     }
 
     @PutMapping("updateProject")
-    public ResponseEntity<ResponseData> updateProject(@RequestBody UpdateProjectRequest request) {
+    public ResponseData updateProject(@RequestBody UpdateProjectRequest request) {
         String teamId = request.getId();
         if (teamId.isBlank()) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ID_EMPTY));
+            return ResponseData.build(ResponseCode.PROJECT_ID_EMPTY);
         }
 
         Project projectNameTest = projectService.getProjectByName(request.getProjectName(), request.getTeamId());
         if (projectNameTest != null) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST));
+            return ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST);
         }
 
         Project project = new Project(request.getId(), request.getTeamId());
@@ -104,24 +104,24 @@ public class ProjectController extends ControllerBase {
         boolean updateResult = projectService.updateById(project);
 
         if (updateResult) {
-            return ResponseEntity.ok(ResponseData.ok(true));
+            return ResponseData.ok(true);
         } else {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.FAIL));
+            return ResponseData.build(ResponseCode.FAIL);
         }
     }
 
     @PutMapping("archiveProject")
-    public ResponseEntity<ResponseData> archiveProject(@RequestBody UpdateProjectRequest request) {
+    public ResponseData archiveProject(@RequestBody UpdateProjectRequest request) {
         String id = request.getId();
         if (id.isBlank()) {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.PROJECT_ID_EMPTY));
+            return ResponseData.build(ResponseCode.PROJECT_ID_EMPTY);
         }
 
         boolean updateResult = projectService.archiveProject(id);
         if (updateResult) {
-            return ResponseEntity.ok(ResponseData.ok(true));
+            return ResponseData.ok(true);
         } else {
-            return ResponseEntity.badRequest().body(ResponseData.build(ResponseCode.FAIL));
+            return ResponseData.build(ResponseCode.FAIL);
         }
     }
 

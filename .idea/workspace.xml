@@ -24,8 +24,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b42a1ab8-32ef-41ef-8ca8-6032e8875241" name="Default Changelist" comment="split into individual maven module">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/CommonResponseAdvice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ControllerBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +99,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TeamServiceTest">
+  <component name="RunManager" selected="Spring Boot.KanpmApplication">
     <configuration name="D:/Projects/kanpm-backend" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -222,6 +228,8 @@
       <workItem from="1615170244157" duration="1295000" />
       <workItem from="1615186009217" duration="3147000" />
       <workItem from="1615270620276" duration="8403000" />
+      <workItem from="1616577426058" duration="70000" />
+      <workItem from="1616577566908" duration="656000" />
     </task>
     <task id="LOCAL-00001" summary="split into individual maven module">
       <created>1595843086839</created>
@@ -249,6 +257,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.configurationType" implementationName="GradleRunConfiguration" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
