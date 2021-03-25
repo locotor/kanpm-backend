@@ -14,6 +14,8 @@ import com.locotor.kanpm.model.payloads.SignUpRequest;
 import com.locotor.kanpm.services.UserService;
 
 import com.locotor.kanpm.web.common.Captcha;
+import com.locotor.kanpm.web.common.CommonException;
+import com.locotor.kanpm.web.common.CommonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@CommonResponse
 @RequestMapping("/auth")
 public class AuthenticationController {
 
@@ -45,53 +48,53 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseData register(@RequestBody SignUpRequest request, HttpSession session) {
+    public Boolean register(@RequestBody SignUpRequest request, HttpSession session) {
         String requestCaptcha = request.getCaptcha();
         String sessionCaptcha = (String) session.getAttribute(captchaKey);
         if (StringUtils.isEmpty(requestCaptcha)) {
-            return ResponseData.build(ResponseCode.CAPTCHA_IS_NULL);
+            throw new CommonException(ResponseCode.CAPTCHA_IS_NULL);
         }
         if (!sessionCaptcha.equalsIgnoreCase(requestCaptcha)) {
-            return ResponseData.build(ResponseCode.CAPTCHA_NOT_RIGHT);
+            throw new CommonException(ResponseCode.CAPTCHA_NOT_RIGHT);
         }
         session.removeAttribute(captchaKey);
         User userTest = (User) userService.loadUserByUsername(request.getUserName());
         if (userTest != null) {
-            return ResponseData.build(ResponseCode.USER_ALREADY_EXIST);
+            throw new CommonException(ResponseCode.USER_ALREADY_EXIST);
         }
 
         User user = new User(request.getUserName(), passwordEncoder.encode(request.getPassword()));
         boolean insertResult = userService.save(user);
         if (insertResult) {
-            return ResponseData.ok(true);
+            return true;
         } else {
-            return ResponseData.build(ResponseCode.USER_NOT_LOGIN, false);
+            throw new CommonException(ResponseCode.USER_NOT_LOGIN);
         }
 
     }
 
     @GetMapping("/verify-username")
-    public ResponseData verifyUserName(String userNameOrEmail) {
+    public Boolean verifyUserName(String userNameOrEmail) {
         if (userNameOrEmail.isBlank()) {
-            return ResponseData.build(ResponseCode.USER_EMPTY);
+            throw new CommonException(ResponseCode.USER_EMPTY);
         }
         User userTest = (User) userService.loadUserByUsername(userNameOrEmail);
         if (userTest != null) {
-            return ResponseData.build(ResponseCode.SUCCESS, false);
+            return false;
         }
-        return ResponseData.build(ResponseCode.SUCCESS, true);
+        return true;
     }
 
     @GetMapping("/verify-captcha")
-    public ResponseData verifyCaptcha(String captcha, HttpSession session) {
+    public Boolean verifyCaptcha(String captcha, HttpSession session) {
         if (captcha.isBlank()) {
-            return ResponseData.build(ResponseCode.CAPTCHA_IS_NULL);
+            throw new CommonException(ResponseCode.CAPTCHA_IS_NULL);
         }
         String sessionCaptcha = (String) session.getAttribute(captchaKey);
         if (!sessionCaptcha.equalsIgnoreCase(captcha)) {
-            return ResponseData.build(ResponseCode.SUCCESS, false);
+            return false;
         }
-        return ResponseData.build(ResponseCode.SUCCESS, true);
+        return true;
     }
 
     @GetMapping("/captcha")

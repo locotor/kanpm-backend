@@ -7,6 +7,8 @@ import com.locotor.kanpm.model.payloads.AddProjectRequest;
 import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.UpdateProjectRequest;
 import com.locotor.kanpm.services.ProjectService;
+import com.locotor.kanpm.web.common.CommonException;
+import com.locotor.kanpm.web.common.CommonResponse;
 import com.locotor.kanpm.web.security.CurrentUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CommonResponse
 @RequestMapping("/api/project")
 public class ProjectController {
 
@@ -32,42 +35,42 @@ public class ProjectController {
     }
 
     @GetMapping("getProjectById")
-    public ResponseData getProjectById(String id) {
+    public Project getProjectById(String id) {
         Project project = projectService.getById(id);
         if (project == null) {
-            return ResponseData.build(ResponseCode.PROJECT_NOT_EXIST);
+            throw new CommonException(ResponseCode.PROJECT_NOT_EXIST);
         }
-        return ResponseData.ok(project);
+        return project;
     }
 
     @GetMapping("getProjectListByTeamId")
-    public ResponseData getProjectListByTeamId(String teamId) {
+    public List<Project> getProjectListByTeamId(String teamId) {
         List<Project> projectList = projectService.getProjectListByTeamId(teamId);
-        return ResponseData.ok(projectList);
+        return projectList;
     }
 
     @GetMapping("verifyProjectName")
-    public ResponseData verifyProjectName(String projectName, String teamId) {
+    public Boolean verifyProjectName(String projectName, String teamId) {
         if (projectName.isBlank()) {
-            return ResponseData.build(ResponseCode.PROJECT_EMPTY);
+            throw new CommonException(ResponseCode.PROJECT_EMPTY);
         }
         Project projectTest = projectService.getProjectByName(projectName, teamId);
         if (projectTest != null) {
-            return ResponseData.ok(false);
+            return false;
         }
-        return ResponseData.ok(true);
+        return true;
     }
 
     @PostMapping("addProject")
-    public ResponseData postMethodName(@CurrentUser User currentUser,
+    public Boolean postMethodName(@CurrentUser User currentUser,
             @RequestBody AddProjectRequest request) {
         Project projectTest = projectService.getProjectByName(request.getProjectName(), request.getTeamId());
         if (projectTest != null) {
-            return ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST);
+            throw new CommonException(ResponseCode.PROJECT_ALREADY_EXIST);
         }
 
         if (currentUser == null) {
-            return ResponseData.build(ResponseCode.USER_NOT_LOGIN);
+            throw new CommonException(ResponseCode.USER_NOT_LOGIN);
         }
 
         String currentUserId = currentUser.getId();
@@ -80,21 +83,21 @@ public class ProjectController {
         boolean insertResult = projectService.save(project);
 
         if (insertResult) {
-            return ResponseData.ok(true);
+            return true;
         }
-        return ResponseData.build(ResponseCode.FAIL);
+        throw new CommonException(ResponseCode.FAIL);
     }
 
     @PutMapping("updateProject")
-    public ResponseData updateProject(@RequestBody UpdateProjectRequest request) {
+    public Boolean updateProject(@RequestBody UpdateProjectRequest request) {
         String teamId = request.getId();
         if (teamId.isBlank()) {
-            return ResponseData.build(ResponseCode.PROJECT_ID_EMPTY);
+            throw new CommonException(ResponseCode.PROJECT_ID_EMPTY);
         }
 
         Project projectNameTest = projectService.getProjectByName(request.getProjectName(), request.getTeamId());
         if (projectNameTest != null) {
-            return ResponseData.build(ResponseCode.PROJECT_ALREADY_EXIST);
+            throw new CommonException(ResponseCode.PROJECT_ALREADY_EXIST);
         }
 
         Project project = new Project(request.getId(), request.getTeamId());
@@ -104,24 +107,24 @@ public class ProjectController {
         boolean updateResult = projectService.updateById(project);
 
         if (updateResult) {
-            return ResponseData.ok(true);
+            return true;
         } else {
-            return ResponseData.build(ResponseCode.FAIL);
+            throw new CommonException(ResponseCode.FAIL);
         }
     }
 
     @PutMapping("archiveProject")
-    public ResponseData archiveProject(@RequestBody UpdateProjectRequest request) {
+    public Boolean archiveProject(@RequestBody UpdateProjectRequest request) {
         String id = request.getId();
         if (id.isBlank()) {
-            return ResponseData.build(ResponseCode.PROJECT_ID_EMPTY);
+            throw new CommonException(ResponseCode.PROJECT_ID_EMPTY);
         }
 
         boolean updateResult = projectService.archiveProject(id);
         if (updateResult) {
-            return ResponseData.ok(true);
+            return true;
         } else {
-            return ResponseData.build(ResponseCode.FAIL);
+            throw new CommonException(ResponseCode.FAIL);
         }
     }
 

@@ -11,7 +11,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@ControllerAdvice
+@ControllerAdvice(annotations = CommonResponse.class)
 public class CommonResponseAdvice implements ResponseBodyAdvice {
 
     @Override
@@ -22,10 +22,10 @@ public class CommonResponseAdvice implements ResponseBodyAdvice {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
             Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (((ResponseData) body).getCode() == ResponseCode.SUCCESS.getCode()) {
-            return ResponseEntity.ok(body);
-        } else {
-            return ResponseEntity.badRequest().body(body);
+        if(body instanceof  ResponseData){
+            return  body;
+        }else {
+            return  ResponseData.ok(body);
         }
     }
 

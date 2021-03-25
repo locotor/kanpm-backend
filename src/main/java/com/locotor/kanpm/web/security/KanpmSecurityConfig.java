@@ -17,8 +17,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class KanpmSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserDetailsService userDetailsService;
+
+    private UnAuthenticationEntryPoint unAuthenticationEntryPoint;
+
+    private AfterLogoutHandler afterLogoutHandler;
+
     @Autowired
-    UserDetailsService userDetailsService;
+    public KanpmSecurityConfig(UserDetailsService userDetailsService,
+                               UnAuthenticationEntryPoint unAuthenticationEntryPoint,
+                               AfterLogoutHandler afterLogoutHandler) {
+        this.userDetailsService = userDetailsService;
+        this.unAuthenticationEntryPoint = unAuthenticationEntryPoint;
+        this.afterLogoutHandler = afterLogoutHandler;
+    }
 
     @Bean
     public LoginFilter loginFilter(LoginSuccessHandler loginSuccessHandler, LoginFailureHandler loginFailureHandler)
@@ -49,7 +61,9 @@ public class KanpmSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().logout().logoutUrl("/auth/logout").and().authorizeRequests().antMatchers("/auth/*")
+        http.exceptionHandling().authenticationEntryPoint(unAuthenticationEntryPoint)
+                .and().csrf().disable().logout().logoutUrl("/auth/logout").logoutSuccessHandler(afterLogoutHandler)
+                .and().authorizeRequests().antMatchers("/auth/*")
                 .permitAll().anyRequest().authenticated();
 
         http.addFilterAt(loginFilter(new LoginSuccessHandler(), new LoginFailureHandler()),

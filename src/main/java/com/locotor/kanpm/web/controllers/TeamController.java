@@ -7,6 +7,8 @@ import com.locotor.kanpm.model.payloads.AddTeamRequest;
 import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.UpdateTeamRequest;
 import com.locotor.kanpm.services.TeamService;
+import com.locotor.kanpm.web.common.CommonException;
+import com.locotor.kanpm.web.common.CommonResponse;
 import com.locotor.kanpm.web.security.CurrentUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CommonResponse
 @RequestMapping("/api/team")
 public class TeamController {
 
@@ -31,41 +34,41 @@ public class TeamController {
     }
 
     @GetMapping("getTeam")
-    public ResponseData getTeam(String id) {
+    public Team getTeam(String id) {
         Team team = teamService.getById(id);
         if (team != null) {
-            return ResponseData.ok(team);
+            return team;
         }
-        return ResponseData.build(ResponseCode.TEAM_NOT_EXIST);
+        throw new CommonException(ResponseCode.TEAM_NOT_EXIST);
     }
 
     @GetMapping("/verifyTeamName")
-    public ResponseData verifyTeamName(String teamName) {
+    public Boolean verifyTeamName(String teamName) {
         if (teamName.isBlank()) {
-            return ResponseData.build(ResponseCode.TEAM_EMPTY);
+            throw new CommonException(ResponseCode.TEAM_EMPTY);
         }
         Team teamTest = teamService.getTeamByName(teamName);
         if (teamTest != null) {
-            return ResponseData.ok(false);
+            return false;
         }
-        return ResponseData.ok(true);
+        return true;
     }
 
     @GetMapping("getTeamListByMemberId")
-    public ResponseData getTeamListByMemberId(String memberId) {
+    public List<Team> getTeamListByMemberId(String memberId) {
         List<Team> teamList = teamService.getTeamListByMemberId(memberId);
-        return ResponseData.ok(teamList);
+        return teamList;
     }
 
     @PostMapping("addTeam")
-    public ResponseData addTeam(@CurrentUser User currentUser, @RequestBody AddTeamRequest request) {
+    public Boolean addTeam(@CurrentUser User currentUser, @RequestBody AddTeamRequest request) {
         Team teamTest = teamService.getTeamByName(request.getTeamName());
         if (teamTest != null) {
-            return ResponseData.build(ResponseCode.TEAM_ALREADY_EXIST);
+            throw new CommonException(ResponseCode.TEAM_ALREADY_EXIST);
         }
 
         if (currentUser == null) {
-            return ResponseData.build(ResponseCode.USER_NOT_LOGIN);
+            throw new CommonException(ResponseCode.USER_NOT_LOGIN);
         }
 
         String currentUserId = currentUser.getId();
@@ -76,50 +79,50 @@ public class TeamController {
         if (insertResult) {
             String insertTeamId = team.getId();
             int insertTeamMemberResult = this.teamService.insertTeamMembers(insertTeamId,
-                    new String[] { currentUserId });
+                    new String[]{currentUserId});
             if (insertTeamMemberResult > 0) {
-                return ResponseData.ok(true);
+                return true;
             } else {
                 // TODO rollback team table data
             }
         }
-        return ResponseData.build(ResponseCode.FAIL);
+        throw new CommonException(ResponseCode.FAIL);
     }
 
     @PutMapping("updateTeam")
-    public ResponseData updateTeam(@RequestBody UpdateTeamRequest request) {
+    public Boolean updateTeam(@RequestBody UpdateTeamRequest request) {
         String teamId = request.getId();
         if (teamId.isBlank()) {
-            return ResponseData.build(ResponseCode.TEAM_NOT_EXIST);
+            throw new CommonException(ResponseCode.TEAM_NOT_EXIST);
         }
 
         Team teamTest = teamService.getTeamByName(request.getTeamName());
         if (teamTest != null) {
-            return ResponseData.build(ResponseCode.TEAM_ALREADY_EXIST);
+            throw new CommonException(ResponseCode.TEAM_ALREADY_EXIST);
         }
 
         Team team = new Team(teamId, request.getTeamName(), request.getOwnerId(), request.getDescription());
         boolean updateResult = teamService.save(team);
 
         if (updateResult) {
-            return ResponseData.ok(true);
+            return true;
         } else {
-            return ResponseData.build(ResponseCode.FAIL);
+            throw new CommonException(ResponseCode.FAIL);
         }
     }
 
     @PutMapping("archiveTeam")
-    public ResponseData archiveTeam(@RequestBody UpdateTeamRequest request) {
+    public Boolean archiveTeam(@RequestBody UpdateTeamRequest request) {
         String teamId = request.getId();
         if (teamId.isBlank()) {
-            return ResponseData.build(ResponseCode.TEAM_NOT_EXIST);
+            throw new CommonException(ResponseCode.TEAM_NOT_EXIST);
         }
 
         boolean updateResult = teamService.archiveTeam(teamId);
         if (updateResult) {
-            return ResponseData.ok(true);
+            return true;
         } else {
-            return ResponseData.build(ResponseCode.FAIL);
+            throw new CommonException(ResponseCode.FAIL);
         }
     }
 
