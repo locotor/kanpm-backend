@@ -30,7 +30,7 @@ public class TaskStack {
     @TableField("sort_by")
     private Integer sortBy;
 
-    private Integer order;
+    private Integer alignment;
 
     public TaskStack(String projectId,String stackName){
         this.projectId = projectId;

@@ -4,7 +4,6 @@ import com.locotor.kanpm.model.entities.Team;
 import com.locotor.kanpm.model.entities.User;
 import com.locotor.kanpm.model.enums.ResponseCode;
 import com.locotor.kanpm.model.payloads.AddTeamRequest;
-import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.UpdateTeamRequest;
 import com.locotor.kanpm.services.TeamService;
 import com.locotor.kanpm.web.common.CommonException;

@@ -48,8 +48,14 @@ public enum ResponseCode {
     /**
      * 项目 10160-10170
      */
-    PROJECT_NOT_EXIST("10150","项目不存在"), PROJECT_ALREADY_EXIST("10151","项目名已经存在"), PROJECT_EMPTY("10152","项目名为空"),
-    PROJECT_ID_EMPTY("10153","项目ID为空"),
+    PROJECT_NOT_EXIST("10160","项目不存在"), PROJECT_ALREADY_EXIST("10161","项目名已经存在"), PROJECT_EMPTY("10162","项目名为空"),
+    PROJECT_ID_EMPTY("10163","项目ID为空"),
+
+    /**
+     * 任务列表 10170-10180
+     */
+    TASK_STACK_NOT_EXIST("10170","任务列表不存在"), TASK_STACK_ALREADY_EXIST("10171","任务列表名已经存在"), TASK_STACK_EMPTY("10172","任务列表名为空"),
+    TASK_STACK_ID_EMPTY("10173","任务列表ID为空"),
 
     /**
      * 服务器异常 10250-10280

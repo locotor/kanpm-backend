@@ -24,18 +24,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b42a1ab8-32ef-41ef-8ca8-6032e8875241" name="Default Changelist" comment="split into individual maven module">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/CommonException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/CommonResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/ExceptionHandlerAdvice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/AfterLogoutHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/UnAuthenticationEntryPoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/CommonResponseAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/common/CommonResponseAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/TeamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/KanpmSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/locotor/kanpm/web/security/KanpmSecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +235,7 @@
       <workItem from="1615270620276" duration="8403000" />
       <workItem from="1616577426058" duration="70000" />
       <workItem from="1616577566908" duration="3702000" />
-      <workItem from="1616635988027" duration="10979000" />
+      <workItem from="1616635988027" duration="12027000" />
     </task>
     <task id="LOCAL-00001" summary="split into individual maven module">
       <created>1595843086839</created>
