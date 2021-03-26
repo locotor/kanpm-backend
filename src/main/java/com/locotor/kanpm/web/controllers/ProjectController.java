@@ -4,7 +4,6 @@ import com.locotor.kanpm.model.entities.Project;
 import com.locotor.kanpm.model.entities.User;
 import com.locotor.kanpm.model.enums.ResponseCode;
 import com.locotor.kanpm.model.payloads.AddProjectRequest;
-import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.UpdateProjectRequest;
 import com.locotor.kanpm.services.ProjectService;
 import com.locotor.kanpm.web.common.CommonException;
@@ -34,7 +33,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("getProjectById")
+    @GetMapping("get")
     public Project getProjectById(String id) {
         Project project = projectService.getById(id);
         if (project == null) {
@@ -43,7 +42,7 @@ public class ProjectController {
         return project;
     }
 
-    @GetMapping("getProjectListByTeamId")
+    @GetMapping("list-by-team-id")
     public List<Project> getProjectListByTeamId(String teamId) {
         List<Project> projectList = projectService.getProjectListByTeamId(teamId);
         return projectList;
@@ -61,7 +60,7 @@ public class ProjectController {
         return true;
     }
 
-    @PostMapping("addProject")
+    @PostMapping("insert")
     public Boolean postMethodName(@CurrentUser User currentUser,
             @RequestBody AddProjectRequest request) {
         Project projectTest = projectService.getProjectByName(request.getProjectName(), request.getTeamId());
@@ -88,7 +87,7 @@ public class ProjectController {
         throw new CommonException(ResponseCode.FAIL);
     }
 
-    @PutMapping("updateProject")
+    @PutMapping("update")
     public Boolean updateProject(@RequestBody UpdateProjectRequest request) {
         String teamId = request.getId();
         if (teamId.isBlank()) {
@@ -113,7 +112,7 @@ public class ProjectController {
         }
     }
 
-    @PutMapping("archiveProject")
+    @PutMapping("archive")
     public Boolean archiveProject(@RequestBody UpdateProjectRequest request) {
         String id = request.getId();
         if (id.isBlank()) {

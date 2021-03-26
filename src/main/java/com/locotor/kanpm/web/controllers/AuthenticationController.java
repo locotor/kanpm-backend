@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.locotor.kanpm.model.entities.User;
 import com.locotor.kanpm.model.enums.ResponseCode;
-import com.locotor.kanpm.model.payloads.ResponseData;
 import com.locotor.kanpm.model.payloads.SignUpRequest;
 import com.locotor.kanpm.services.UserService;
 

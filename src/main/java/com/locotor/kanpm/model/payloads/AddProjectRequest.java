@@ -9,13 +9,13 @@ import lombok.Data;
 public class AddProjectRequest {
 
     @NotBlank
-    @Size(min = 4, max = 40)
+    @Size(min = 1, max = 128)
     private String projectName;
 
     @NotBlank
     private String teamId;
 
-    @Size(max = 255)
+    @Size(max = 256)
     private String description;
 
 }
