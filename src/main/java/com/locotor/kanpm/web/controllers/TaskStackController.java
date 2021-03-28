@@ -7,6 +7,7 @@ import com.locotor.kanpm.model.entities.TaskStack;
 import com.locotor.kanpm.model.entities.User;
 import com.locotor.kanpm.model.enums.ResponseCode;
 import com.locotor.kanpm.model.payloads.CreateTaskStackRequest;
+import com.locotor.kanpm.model.payloads.MoveTaskStackRequest;
 import com.locotor.kanpm.model.payloads.UpdateTaskStackRequest;
 import com.locotor.kanpm.services.TaskStackService;
 import com.locotor.kanpm.web.common.CommonException;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CommonResponse
-@RequestMapping("/api/task-stack")
+@RequestMapping("/api/task-stacks")
 public class TaskStackController {
 
     private TaskStackService taskStackService;
@@ -33,11 +34,11 @@ public class TaskStackController {
         this.taskStackService = taskStackService;
     }
 
-    @PostMapping("insert")
-    public Boolean insertTaskStack(@CurrentUser User currentUser, @RequestBody CreateTaskStackRequest insertRequest) {
+    @PostMapping()
+    public Boolean createTaskStack(@CurrentUser User currentUser, @RequestBody CreateTaskStackRequest createRequest) {
 
-        String stackName = insertRequest.getStackName();
-        String projectId = insertRequest.getProjectId();
+        String stackName = createRequest.getStackName();
+        String projectId = createRequest.getProjectId();
         if (projectId.isBlank()) {
             throw new CommonException(ResponseCode.PROJECT_ID_EMPTY);
         }
@@ -45,7 +46,7 @@ public class TaskStackController {
             List<TaskStack> stackList = taskStackService.getTaskStackListByProjectId(projectId);
             stackName = "未命名任务列表 - " + (stackList.size() + 1);
         } else {
-            TaskStack stackTest = taskStackService.getStackByName(stackName, insertRequest.getProjectId());
+            TaskStack stackTest = taskStackService.getStackByName(stackName, createRequest.getProjectId());
             if (stackTest != null) {
                 throw new CommonException(ResponseCode.TASK_STACK_ALREADY_EXIST);
             }
@@ -60,12 +61,35 @@ public class TaskStackController {
         boolean insertResult = taskStackService.save(insertStack);
 
         if (insertResult) {
+            if (createRequest.getPreviousId() != null) {
+                TaskStack previous = taskStackService.getById(createRequest.getPreviousId());
+                previous.setNextStackId(insertStack.getId());
+                taskStackService.updateById(previous);
+            }
             return true;
         }
         throw new CommonException(ResponseCode.FAIL);
     }
 
-    @PutMapping("update")
+    @PutMapping("move-stack")
+    public Boolean MoveStack(@RequestBody MoveTaskStackRequest moveStackRequest) {
+        TaskStack oldPrevious = moveStackRequest.getOldPrevious();
+        TaskStack newPrevious = moveStackRequest.getNewPrevious();
+        TaskStack movedStack = moveStackRequest.getMovedStack();
+        if (oldPrevious != null) {
+            oldPrevious.setNextStackId(movedStack.getNextStackId());
+            taskStackService.updateById(oldPrevious);
+        }
+        if (newPrevious != null) {
+            newPrevious.setNextStackId(movedStack.getId());
+            taskStackService.updateById(newPrevious);
+        }
+        movedStack.setNextStackId(moveStackRequest.getNewNextId());
+        taskStackService.updateById(movedStack);
+        return true;
+    }
+
+    @PutMapping()
     public Boolean updateProject(@RequestBody UpdateTaskStackRequest updateRequest) {
         String id = updateRequest.getId();
         if (id.isBlank()) {
@@ -82,9 +106,6 @@ public class TaskStackController {
         if (!updateRequest.getStackName().isBlank()) {
             updateStack.setStackName(updateRequest.getStackName());
         }
-        if (updateRequest.getAlignment() != null) {
-            updateStack.setAlignment(updateRequest.getAlignment());
-        }
         if (updateRequest.getSortBy() != null) {
             updateStack.setSortBy(updateRequest.getSortBy());
         }
@@ -97,7 +118,7 @@ public class TaskStackController {
         }
     }
 
-    @GetMapping("list-by-project-id")
+    @GetMapping()
     public List<TaskStack> getTaskStackListByProjectId(String projectId) {
         if (projectId == null || projectId.isBlank()) {
             throw new CommonException(ResponseCode.PROJECT_ID_EMPTY);

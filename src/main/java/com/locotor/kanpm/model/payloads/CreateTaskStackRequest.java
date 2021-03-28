@@ -14,4 +14,6 @@ public class CreateTaskStackRequest {
     @NotBlank
     private String projectId;
 
+    private String previousId;
+
 }

@@ -17,8 +17,6 @@ public class UpdateTaskStackRequest {
     @Size(min = 1, max = 64)
     private String stackName;
 
-    private Integer alignment;
-
     private Integer sortBy;
 
 }
