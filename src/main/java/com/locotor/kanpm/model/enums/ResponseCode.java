@@ -38,24 +38,29 @@ public enum ResponseCode {
     USER_NOT_EXIST("10123", "用户不存在"), USER_ALREADY_EXIST("10124", "用户名已存在"), USER_DISABLE("10125", "用户被禁用或被注销"),
     USER_IS_RIGHT("10126", "合法用户"), USER_NOT_RIGHT("10127", "用户不合法"), CREDENTIAL_NOT_RIGHT("10131", "密码已过期"),
     USER_LOGOUT("10128", "已注销"), USER_IS_LOCK("10129", "登录次数过多，用户被锁定"), USER_PWD_EQUAL("10130", "原始密码和新密码相同"),
-    CAPTCHA_IS_NULL("10131","验证码不能为空"), CAPTCHA_NOT_RIGHT("10132","验证码错误"),
+    CAPTCHA_IS_NULL("10131", "验证码不能为空"), CAPTCHA_NOT_RIGHT("10132", "验证码错误"),
 
     /**
      * 小组 10150-10160
      */
-    TEAM_NOT_EXIST("10150","小组不存在"), TEAM_ALREADY_EXIST("10151","小组名已经存在"), TEAM_EMPTY("10152","小组名为空"),
+    TEAM_NOT_EXIST("10150", "小组不存在"), TEAM_ALREADY_EXIST("10151", "小组名已经存在"), TEAM_EMPTY("10152", "小组名为空"),
 
     /**
      * 项目 10160-10170
      */
-    PROJECT_NOT_EXIST("10160","项目不存在"), PROJECT_ALREADY_EXIST("10161","项目名已经存在"), PROJECT_EMPTY("10162","项目名为空"),
-    PROJECT_ID_EMPTY("10163","项目ID为空"),
+    PROJECT_NOT_EXIST("10160", "项目不存在"), PROJECT_ALREADY_EXIST("10161", "项目名已经存在"), PROJECT_EMPTY("10162", "项目名为空"),
+    PROJECT_ID_EMPTY("10163", "项目ID为空"),
 
     /**
      * 任务列表 10170-10180
      */
-    TASK_STACK_NOT_EXIST("10170","任务列表不存在"), TASK_STACK_ALREADY_EXIST("10171","任务列表名已经存在"), TASK_STACK_EMPTY("10172","任务列表名为空"),
-    TASK_STACK_ID_EMPTY("10173","任务列表ID为空"),
+    TASK_STACK_NOT_EXIST("10170", "任务列表不存在"), TASK_STACK_ALREADY_EXIST("10171", "任务列表名已经存在"),
+    TASK_STACK_EMPTY("10172", "任务列表名为空"), TASK_STACK_ID_EMPTY("10173", "任务列表ID为空"),
+
+    /**
+     * 任务列表 10180-10190
+     */
+    TASK_NOT_EXIST("10180", "任务不存在"), TASK_EMPTY("10171", "任务描述为空"), TASK_ID_EMPTY("10172", "任务ID为空"),
 
     /**
      * 服务器异常 10250-10280

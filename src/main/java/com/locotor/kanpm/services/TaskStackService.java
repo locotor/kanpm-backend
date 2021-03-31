@@ -22,7 +22,6 @@ public class TaskStackService extends ServiceImpl<TaskStackMapper, TaskStack> {
     }
 
     public List<TaskStack> getTaskStackListByProjectId(String projectId) {
-
         QueryWrapper<TaskStack> wrapper = new QueryWrapper<>();
         wrapper.eq("project_id", projectId);
         return list(wrapper);

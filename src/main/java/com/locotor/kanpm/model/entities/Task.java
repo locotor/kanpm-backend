@@ -15,11 +15,15 @@ public class Task {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
-    @TableField("task_name")
-    private String taskName;
+    private String description;
 
-    @TableField("task_priority")
-    private Integer taskPriority;
+    private Integer priority;
+
+    @TableField("is_complete")
+    private Boolean isComplete;
+
+    @TableField("next_task_id")
+    private String nextTaskId;
 
     @TableField("stack_id")
     private String stackId;
@@ -29,9 +33,6 @@ public class Task {
 
     @TableField("principal_user_id")
     private String principalUserId;
-
-    @TableField("task_description")
-    private String taskDescription;
 
     @TableField("create_time")
     private Date createTime;
@@ -45,8 +46,8 @@ public class Task {
     @TableField("completed_time")
     private Date completedTime;
 
-    public Task(String taskName,String stackId){
-        this.taskName = taskName;
+    public Task(String stackId, String description) {
+        this.description = description;
         this.stackId = stackId;
     }
 
