@@ -22,8 +22,8 @@ public class Task {
     @TableField("is_complete")
     private Boolean isComplete;
 
-    @TableField("next_task_id")
-    private String nextTaskId;
+    @TableField("next_id")
+    private String nextId;
 
     @TableField("stack_id")
     private String stackId;

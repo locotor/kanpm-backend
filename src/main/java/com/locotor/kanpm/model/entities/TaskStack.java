@@ -30,8 +30,8 @@ public class TaskStack {
     @TableField("sort_by")
     private Integer sortBy;
 
-    @TableField("next_stack_id")
-    private String nextStackId;
+    @TableField("next_id")
+    private String nextId;
 
     public TaskStack(String projectId,String stackName){
         this.projectId = projectId;

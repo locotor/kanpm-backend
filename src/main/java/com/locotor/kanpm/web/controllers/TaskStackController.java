@@ -63,7 +63,7 @@ public class TaskStackController {
         if (insertResult) {
             if (createRequest.getPreviousId() != null) {
                 TaskStack previous = taskStackService.getById(createRequest.getPreviousId());
-                previous.setNextStackId(insertStack.getId());
+                previous.setNextId(insertStack.getId());
                 taskStackService.updateById(previous);
             }
             return true;
@@ -77,14 +77,14 @@ public class TaskStackController {
         TaskStack newPrevious = moveStackRequest.getNewPrevious();
         TaskStack movedStack = moveStackRequest.getMovedStack();
         if (oldPrevious != null) {
-            oldPrevious.setNextStackId(movedStack.getNextStackId());
+            oldPrevious.setNextId(movedStack.getNextId());
             taskStackService.updateById(oldPrevious);
         }
         if (newPrevious != null) {
-            newPrevious.setNextStackId(movedStack.getId());
+            newPrevious.setNextId(movedStack.getId());
             taskStackService.updateById(newPrevious);
         }
-        movedStack.setNextStackId(moveStackRequest.getNewNextId());
+        movedStack.setNextId(moveStackRequest.getNewNextId());
         taskStackService.updateById(movedStack);
         return true;
     }
