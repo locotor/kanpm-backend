@@ -7,6 +7,7 @@ import com.locotor.kanpm.model.entities.Task;
 import com.locotor.kanpm.model.entities.User;
 import com.locotor.kanpm.model.enums.ResponseCode;
 import com.locotor.kanpm.model.payloads.CreateTaskRequest;
+import com.locotor.kanpm.model.payloads.MoveTaskRequest;
 import com.locotor.kanpm.services.TaskService;
 import com.locotor.kanpm.web.common.CommonException;
 import com.locotor.kanpm.web.common.CommonResponse;
@@ -15,9 +16,9 @@ import com.locotor.kanpm.web.security.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -49,9 +50,32 @@ public class TaskController {
         boolean insertResult = taskService.save(insertTask);
 
         if (insertResult) {
+            if (createRequest.getPreviousId() != null) {
+                Task previous = taskService.getById(createRequest.getPreviousId());
+                previous.setNextId(insertTask.getId());
+                taskService.updateById(previous);
+            }
             return insertTask;
         }
         throw new CommonException(ResponseCode.FAIL);
+    }
+
+    @PutMapping("move-task")
+    public Boolean moveTask(@RequestBody MoveTaskRequest moveStackRequest) {
+        Task oldPrevious = moveStackRequest.getOldPrevious();
+        Task newPrevious = moveStackRequest.getNewPrevious();
+        Task movedTask = moveStackRequest.getMovedTask();
+        if (oldPrevious != null) {
+            oldPrevious.setNextId(movedTask.getNextId());
+            taskService.updateById(oldPrevious);
+        }
+        if (newPrevious != null) {
+            newPrevious.setNextId(movedTask.getId());
+            taskService.updateById(newPrevious);
+        }
+        movedTask.setNextId(moveStackRequest.getNewNextId());
+        taskService.updateById(movedTask);
+        return true;
     }
 
     @GetMapping()

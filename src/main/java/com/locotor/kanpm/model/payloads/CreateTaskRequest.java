@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class CreateTaskRequest {
-    
+
     @NotBlank
     @Size(min = 1, max = 128)
     private String description;
@@ -16,5 +16,7 @@ public class CreateTaskRequest {
     private String stackId;
 
     private String principalUserId;
+
+    private String previousId;
 
 }
