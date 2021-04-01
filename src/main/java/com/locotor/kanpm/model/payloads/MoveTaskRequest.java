@@ -6,13 +6,15 @@ import lombok.Data;
 
 @Data
 public class MoveTaskRequest {
-    
+
     private Task oldPrevious;
-    
+
     private Task newPrevious;
-    
+
     private String newNextId;
-    
+
+    private String newStackId;
+
     private Task movedTask;
 
 }

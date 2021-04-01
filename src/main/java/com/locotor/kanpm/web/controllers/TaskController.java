@@ -47,6 +47,7 @@ public class TaskController {
         Task insertTask = new Task(stackId, description);
         insertTask.setCreatorId(currentUser.getId());
         insertTask.setCreateTime(new Date());
+        insertTask.setNextId("");
         boolean insertResult = taskService.save(insertTask);
 
         if (insertResult) {
@@ -61,20 +62,24 @@ public class TaskController {
     }
 
     @PutMapping("move-task")
-    public Boolean moveTask(@RequestBody MoveTaskRequest moveStackRequest) {
-        Task oldPrevious = moveStackRequest.getOldPrevious();
-        Task newPrevious = moveStackRequest.getNewPrevious();
-        Task movedTask = moveStackRequest.getMovedTask();
+    public Boolean moveTask(@RequestBody MoveTaskRequest moveTaskRequest) {
+        Task oldPrevious = moveTaskRequest.getOldPrevious();
+        Task newPrevious = moveTaskRequest.getNewPrevious();
+        Task moveTask = moveTaskRequest.getMovedTask();
+        String newStackId = moveTaskRequest.getNewStackId();
         if (oldPrevious != null) {
-            oldPrevious.setNextId(movedTask.getNextId());
+            oldPrevious.setNextId(moveTask.getNextId());
             taskService.updateById(oldPrevious);
         }
         if (newPrevious != null) {
-            newPrevious.setNextId(movedTask.getId());
+            newPrevious.setNextId(moveTask.getId());
             taskService.updateById(newPrevious);
         }
-        movedTask.setNextId(moveStackRequest.getNewNextId());
-        taskService.updateById(movedTask);
+        if (newStackId != null) {
+            moveTask.setStackId(newStackId);
+        }
+        moveTask.setNextId(moveTaskRequest.getNewNextId());
+        taskService.updateById(moveTask);
         return true;
     }
 
