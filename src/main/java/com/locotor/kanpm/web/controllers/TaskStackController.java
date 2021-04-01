@@ -58,6 +58,7 @@ public class TaskStackController {
         TaskStack insertStack = new TaskStack(projectId, stackName);
         insertStack.setCreatorId(currentUser.getId());
         insertStack.setCreateTime(new Date());
+        insertStack.setNextId("");
         boolean insertResult = taskStackService.save(insertStack);
 
         if (insertResult) {
@@ -72,10 +73,11 @@ public class TaskStackController {
     }
 
     @PutMapping("move-stack")
-    public Boolean MoveStack(@RequestBody MoveTaskStackRequest moveStackRequest) {
+    public Boolean moveStack(@RequestBody MoveTaskStackRequest moveStackRequest) {
         TaskStack oldPrevious = moveStackRequest.getOldPrevious();
         TaskStack newPrevious = moveStackRequest.getNewPrevious();
         TaskStack movedStack = moveStackRequest.getMovedStack();
+        
         if (oldPrevious != null) {
             oldPrevious.setNextId(movedStack.getNextId());
             taskStackService.updateById(oldPrevious);
